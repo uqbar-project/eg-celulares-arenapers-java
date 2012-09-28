@@ -30,6 +30,7 @@ public class RepositorioCelulares extends PersistentHome<Celular> implements Ser
 	}
 
 	public void create(Celular celular) {
+		this.validarClientesDuplicados(celular);
 		celular.validar();
 		super.create(celular);
 	}
