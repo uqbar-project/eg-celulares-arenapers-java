@@ -1,15 +1,11 @@
-package org.uqbar.edu.paiu.examples.celulares.ui.arena;
+package ar.edu.celularesPersistentJava.runnable;
 
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 
+import ar.edu.celularesPersistentJava.ui.BuscarCelularesWindow;
 import uqbar.arena.persistence.Configuration;
 
-/**
- * Correr esta clase con el siguiente argument
- * 
- * -Djava.system.class.loader=org.uqbar.arena.aop.ArenaClassLoader
- */
 public class CelularApplication extends Application {
 
 	public static void main(String[] args) {

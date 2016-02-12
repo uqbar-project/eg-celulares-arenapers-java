@@ -1,17 +1,21 @@
-package org.uqbar.edu.paiu.examples.celulares.dao;
+package ar.edu.celularesPersistentJava.repos;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-import org.uqbar.edu.paiu.examples.celulares.domain.ModeloCelular;
 
-import uqbar.arena.persistence.PersistentHome;
+import uqbar.arena.persistence.PersistentRepo;
+import ar.edu.celularesPersistentJava.domain.ModeloCelular;
 
+@SuppressWarnings("serial")
 @Observable
-public class RepositorioModelos extends PersistentHome<ModeloCelular> implements Serializable {
-	private static final long serialVersionUID = 4452732090618899782L;
+public class RepositorioModelos extends PersistentRepo<ModeloCelular> implements Serializable {
+	
+	/**
+	 * Definición del Singleton
+	 */
 	private static RepositorioModelos instance;
 
 	public static RepositorioModelos getInstance() {
@@ -36,7 +40,7 @@ public class RepositorioModelos extends PersistentHome<ModeloCelular> implements
 	}
 	
 	private void createIfNotExists(ModeloCelular modeloCelular) {
-		if(this.find(modeloCelular.getDescripcion()).size()==0){
+		if(this.find(modeloCelular.getDescripcion()).isEmpty()){
 			this.create(modeloCelular);
 		}
 	}
@@ -48,11 +52,11 @@ public class RepositorioModelos extends PersistentHome<ModeloCelular> implements
 	}
 	
 	public ModeloCelular get(String descripcion) {
-		List<ModeloCelular> list = this.find(descripcion);
-		if(list.size() == 0)
+		List<ModeloCelular> modelos = this.find(descripcion);
+		if(modelos.isEmpty())
 			throw new UserException("No se encontró el modelo de celular: " + descripcion);
 		
-		return list.get(0);
+		return modelos.get(0);
 	}
 
 	public List<ModeloCelular> getModelos() {

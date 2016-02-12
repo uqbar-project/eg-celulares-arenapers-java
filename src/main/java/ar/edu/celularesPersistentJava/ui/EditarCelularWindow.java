@@ -1,6 +1,5 @@
-package org.uqbar.edu.paiu.examples.celulares.ui.arena;
+package ar.edu.celularesPersistentJava.ui;
 
-import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.aop.windows.TransactionalDialog;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.bindings.PropertyAdapter;
@@ -12,15 +11,16 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.commons.model.ObservableUtils;
-import org.uqbar.edu.paiu.examples.celulares.dao.RepositorioCelulares;
-import org.uqbar.edu.paiu.examples.celulares.dao.RepositorioModelos;
-import org.uqbar.edu.paiu.examples.celulares.domain.Celular;
-import org.uqbar.edu.paiu.examples.celulares.domain.ModeloCelular;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ListBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
+import ar.edu.celularesPersistentJava.domain.Celular;
+import ar.edu.celularesPersistentJava.domain.ModeloCelular;
+import ar.edu.celularesPersistentJava.repos.RepositorioCelulares;
+import ar.edu.celularesPersistentJava.repos.RepositorioModelos;
+
+@SuppressWarnings("serial")
 public class EditarCelularWindow extends TransactionalDialog<Celular> {
 
 	public EditarCelularWindow(WindowOwner owner, Celular model) {
@@ -40,13 +40,13 @@ public class EditarCelularWindow extends TransactionalDialog<Celular> {
 
 		new Label(form).setText("Modelo del aparato");
 		Selector<ModeloCelular> selector = new Selector<ModeloCelular>(form) //
-			.allowNull(false);
+				.allowNull(false);
 		selector.bindValueToProperty("modeloCelular");
 
-		Binding<ListBuilder<ModeloCelular>> itemsBinding = selector.bindItems( //
-			new ObservableProperty(RepositorioModelos.getInstance(), "modelos"));
+		Binding<ModeloCelular, Selector<ModeloCelular>, ListBuilder<ModeloCelular>> itemsBinding = selector.bindItems( //
+				new ObservableProperty(RepositorioModelos.getInstance(), "modelos"));
 		itemsBinding.setAdapter( //
-			new PropertyAdapter(ModeloCelular.class, "descripcionEntera"));
+				new PropertyAdapter(ModeloCelular.class, "descripcionEntera"));
 
 		new Label(form).setText("Recibe resumen cuenta en domicilio");
 		CheckBox chkRecibeResumenCuenta = new CheckBox(form);
@@ -58,23 +58,20 @@ public class EditarCelularWindow extends TransactionalDialog<Celular> {
 	protected void addActions(Panel actions) {
 		new Button(actions)
 			.setCaption("Aceptar")
-			.onClick(new MessageSend(this, "accept"))
+			.onClick(() -> {
+				RepositorioCelulares repoCelulares = RepositorioCelulares.getInstance();
+				Celular modelObject = this.getModelObject();
+				if (modelObject.isNew()) {
+					repoCelulares.create(modelObject);
+				} else {
+					repoCelulares.update(modelObject);
+				}
+				this.accept();
+			})
 			.setAsDefault()
 			.disableOnError();
 
 		new Button(actions) //
-			.setCaption("Cancelar")
-			.onClick(new MessageSend(this, "cancel"));
-		this.onAccept(new Action() {
-			@Override
-			public <T> void execute(T... objects) {
-				
-			}
-			
-			@Override
-			public void execute() {
-				RepositorioCelulares.getInstance().update(EditarCelularWindow.this.getModelObject());
-			}
-		});
+				.setCaption("Cancelar").onClick( () -> this.cancel() );
 	}
 }

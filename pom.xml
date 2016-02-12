@@ -12,15 +12,29 @@
   
 	<dependencies>
 		<dependency>
-			<groupId>uqbar</groupId>
-			<artifactId>arena</artifactId>
-			<version>${arena-version}</version>
+			<groupId>org.uqbar-project</groupId>
+			<artifactId>arena-jface</artifactId>
+			<version>3.6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>uqbar</groupId>
+			<groupId>org.uqbar-project</groupId>
 			<artifactId>arena-pers</artifactId>
-			<version>${arena-version}</version>
+			<version>3.6.1</version>
 		</dependency>
 	</dependencies>
 	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+		
 </project>

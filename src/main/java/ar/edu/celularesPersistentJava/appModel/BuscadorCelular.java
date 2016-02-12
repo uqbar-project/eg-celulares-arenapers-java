@@ -1,10 +1,12 @@
-package org.uqbar.edu.paiu.examples.celulares.ui.arena;
+package ar.edu.celularesPersistentJava.appModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
-import org.uqbar.edu.paiu.examples.celulares.dao.RepositorioCelulares;
-import org.uqbar.edu.paiu.examples.celulares.domain.Celular;
+
+import ar.edu.celularesPersistentJava.domain.Celular;
+import ar.edu.celularesPersistentJava.repos.RepositorioCelulares;
 
 /**
  * Application model que representa la búsqueda de {@link Celular}.
@@ -34,12 +36,14 @@ public class BuscadorCelular {
 	// ********************************************************
 
 	public void search() {
+		this.resultados = new ArrayList<Celular>();
 		this.resultados = RepositorioCelulares.getInstance().search(this.numero, this.nombre);
 	}
 
 	public void clear() {
 		this.nombre = "";
 		this.numero = null;
+		this.resultados = new ArrayList<Celular>();
 	}
 
 	public void eliminarCelularSeleccionado() {

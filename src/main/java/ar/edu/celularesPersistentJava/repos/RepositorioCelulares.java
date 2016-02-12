@@ -1,24 +1,26 @@
-package org.uqbar.edu.paiu.examples.celulares.dao;
+package ar.edu.celularesPersistentJava.repos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-import org.uqbar.edu.paiu.examples.celulares.domain.Celular;
 
-import uqbar.arena.persistence.PersistentHome;
+import uqbar.arena.persistence.PersistentRepo;
+import ar.edu.celularesPersistentJava.domain.Celular;
 
 /**
  * 
  * @author npasserini
  */
+@SuppressWarnings("serial")
 @Observable
-public class RepositorioCelulares extends PersistentHome<Celular> implements Serializable {
+public class RepositorioCelulares extends PersistentRepo<Celular> implements Serializable {
 	private static RepositorioCelulares instance;
-	private List<Celular> data = new ArrayList<Celular>();
 
+	/**
+	 * Definición del Singleton
+	 */
 	public static synchronized RepositorioCelulares getInstance() {
 		if (instance == null) {
 			instance = new RepositorioCelulares();
@@ -52,9 +54,16 @@ public class RepositorioCelulares extends PersistentHome<Celular> implements Ser
 	/**
 	 * Busca los celulares que coincidan con los datos recibidos. Tanto número como nombre pueden ser nulos,
 	 * en ese caso no se filtra por ese atributo.
+	 * Para que funcione correctamente el search by example hay que tener cuidado 
+	 * ya que se incluyen en la búsqueda cualquiera de los valores de un objeto example que no sean nulos, esto implica
+	 * 1) ojo con los tipos primitivos boolean, int, float, etc.
+	 * 2) pero además ojo con los valores inicializados por default, tanto en el constructor como en la definición de la clase
+	 * ej: Boolean recibeResumenCuenta = false implica que siempre va a buscar a los clientes que no reciban resumen de cuenta
+	 *
+	 * Para soportar búsquedas por substring hay que descomentar todo el código de abajo, el problema es que trae 
+	 * a memoria todo el grafo de celulares (con una cantidad enorme de celulares puede traer problemas de performance)
+	 * En ese caso el celular (12345, "Juan Gonzalez") será contemplado por la búsqueda (23, "Gonza")
 	 * 
-	 * Soporta búsquedas por substring, por ejemplo el celular (12345, "Juan Gonzalez") será contemplado por
-	 * la búsqueda (23, "Gonza")
 	 */
 	public List<Celular> search(Integer numero, String nombre) {
 		Celular example = new Celular(nombre, numero);

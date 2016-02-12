@@ -1,4 +1,4 @@
-package org.uqbar.edu.paiu.examples.celulares.domain;
+package ar.edu.celularesPersistentJava.domain;
 import java.math.BigDecimal;
 
 import org.uqbar.commons.model.Entity;
@@ -14,9 +14,9 @@ import uqbar.arena.persistence.annotations.PersistentField;
 public class ModeloCelular extends Entity {
 	public static final String DESCRIPCION = "descripcion";
 	
-	private String descripcion;
-	private BigDecimal costo;
-	private Boolean requiereResumenCuenta;  // FED: boolean tiene problemas
+	@PersistentField private String descripcion;
+	@PersistentField private BigDecimal costo;
+	@PersistentField private Boolean requiereResumenCuenta;  // FED: boolean tiene problemas
 	
 	public ModeloCelular(){
 	}
@@ -31,7 +31,6 @@ public class ModeloCelular extends Entity {
 		this.requiereResumenCuenta = requiereResumenCuenta;
 	}
 
-	@PersistentField
 	public String getDescripcion() {
 		return this.descripcion;
 	}
@@ -44,7 +43,6 @@ public class ModeloCelular extends Entity {
 		this.descripcion = descripcion;
 	}
 	
-	@PersistentField
 	public BigDecimal getCosto() {
 		return this.costo;
 	}
@@ -53,7 +51,6 @@ public class ModeloCelular extends Entity {
 		this.costo = costo;
 	}
 	
-	@PersistentField
 	public Boolean getRequiereResumenCuenta() {
 		return requiereResumenCuenta;
 	}
