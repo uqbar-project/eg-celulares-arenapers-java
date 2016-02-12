@@ -63,11 +63,20 @@ public class BuscarCelularesWindow extends SimpleWindow<BuscadorCelular> {
 		Panel searchFormPanel = new Panel(mainPanel);
 		searchFormPanel.setLayout(new ColumnLayout(2));
 
-		new Label(searchFormPanel).setText("Número").setForeground(Color.BLUE);
-		new NumericField(searchFormPanel).bindValueToProperty("numero");
+		new Label(searchFormPanel)
+			.setText("Número")
+			.setForeground(Color.BLUE);
+		new NumericField(searchFormPanel)
+			.setWidth(150)
+			.bindValueToProperty("numero");
 
-		new Label(searchFormPanel).setText("Nombre del cliente").setForeground(Color.BLUE);
-		new TextBox(searchFormPanel).bindValueToProperty("nombre");
+		new Label(searchFormPanel)
+			.setText("Nombre del cliente")
+			.setForeground(Color.BLUE);
+		
+		new TextBox(searchFormPanel)
+			.setWidth(200)
+			.bindValueToProperty("nombre");
 	}
 
 	/**

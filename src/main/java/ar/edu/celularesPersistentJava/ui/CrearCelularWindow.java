@@ -9,6 +9,7 @@ public class CrearCelularWindow extends EditarCelularWindow {
 
 	public CrearCelularWindow(WindowOwner owner) {
 		super(owner, new Celular());
+		this.setTitle("Generar un nuevo cliente");
 	}
 
 }

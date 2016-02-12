@@ -8,6 +8,7 @@ import org.uqbar.commons.utils.Observable;
 
 import uqbar.arena.persistence.PersistentRepo;
 import ar.edu.celularesPersistentJava.domain.Celular;
+import ar.edu.celularesPersistentJava.domain.ModeloCelular;
 
 /**
  * 
@@ -35,6 +36,32 @@ public class RepositorioCelulares extends PersistentRepo<Celular> implements Ser
 		this.validarClientesDuplicados(celular);
 		celular.validar();
 		super.create(celular);
+	}
+
+	public void createIfNotExists(String pNombre, Integer pNumero, ModeloCelular pModeloCelular,Boolean pRecibeResumenCuenta) {
+		Celular celular = new Celular(pNombre, pNumero, pModeloCelular, pRecibeResumenCuenta);
+		this.createIfNotExists(celular);
+	}
+	
+	public Celular createIfNotExists(Celular celular) {
+		Celular celularDB = this.get(celular.getNumero());
+		if (celularDB == null) {
+			this.create(celular);
+			celularDB = celular;
+		}
+		return celularDB;
+	}
+
+	/**
+	 * Devuelve un celular en base al número (que no puede repetirse)
+	 */
+	public Celular get(Integer unNumero) {
+		List<Celular> celulares = this.search(unNumero);
+		if (celulares.isEmpty()) {
+			return null;
+		} else {
+			return celulares.get(0);
+		}
 	}
 
 	protected void validarClientesDuplicados(Celular celular) {

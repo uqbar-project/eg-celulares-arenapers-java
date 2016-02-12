@@ -34,15 +34,13 @@ public class RepositorioModelos extends PersistentRepo<ModeloCelular> implements
 	}
 	
 	private RepositorioModelos() {
-		this.createIfNotExists(new ModeloCelular("NOKIA 1100", 150, true));
-		this.createIfNotExists(new ModeloCelular("Motorola M90", 350, true));
-		this.createIfNotExists(new ModeloCelular("Samsung Galaxy SII", 440));
 	}
 	
-	private void createIfNotExists(ModeloCelular modeloCelular) {
+	public ModeloCelular createIfNotExists(ModeloCelular modeloCelular) {
 		if(this.find(modeloCelular.getDescripcion()).isEmpty()){
 			this.create(modeloCelular);
 		}
+		return modeloCelular;
 	}
 
 	public List<ModeloCelular> find(String descripcion) {

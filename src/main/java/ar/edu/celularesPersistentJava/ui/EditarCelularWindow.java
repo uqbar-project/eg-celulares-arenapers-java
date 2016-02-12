@@ -7,11 +7,11 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.NumericField;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ListBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
@@ -25,6 +25,7 @@ public class EditarCelularWindow extends TransactionalDialog<Celular> {
 
 	public EditarCelularWindow(WindowOwner owner, Celular model) {
 		super(owner, model);
+		this.setTitle("Editar datos del cliente");
 	}
 
 	@Override
@@ -33,15 +34,20 @@ public class EditarCelularWindow extends TransactionalDialog<Celular> {
 		form.setLayout(new ColumnLayout(2));
 
 		new Label(form).setText("Número");
-		new TextBox(form).bindValueToProperty("numero");
+		new NumericField(form)
+			.setWidth(150)
+			.bindValueToProperty("numero");
 
 		new Label(form).setText("Nombre del cliente");
-		new TextBox(form).bindValueToProperty("nombre");
+		new TextBox(form)
+			.setWidth(200)
+			.bindValueToProperty("nombre");
 
 		new Label(form).setText("Modelo del aparato");
-		Selector<ModeloCelular> selector = new Selector<ModeloCelular>(form) //
-				.allowNull(false);
+		Selector<ModeloCelular> selector = new Selector<ModeloCelular>(form); //
 		selector.bindValueToProperty("modeloCelular");
+		selector.allowNull(false);
+		selector.setWidth(200);
 
 		Binding<ModeloCelular, Selector<ModeloCelular>, ListBuilder<ModeloCelular>> itemsBinding = selector.bindItems( //
 				new ObservableProperty(RepositorioModelos.getInstance(), "modelos"));
