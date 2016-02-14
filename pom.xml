@@ -4,11 +4,6 @@
 	<groupId>org.uqbar.edu.paiu</groupId>
 	<artifactId>celulares-ui-arena-persistence-java</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<parent>
-		<groupId>uqbar</groupId>
-		<artifactId>arena-parent</artifactId>
-		<version>1.1</version>
-	</parent>
   
 	<dependencies>
 		<dependency>
